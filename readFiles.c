@@ -38,7 +38,7 @@ void readPoints(float *pointsList[2]){
 	fclose(pointsY);
 }
 
-void readConf(int *RESX, int *RESY, int *NPOINTS, int *JITTER, float *JITTER_B, int *GRAY, int *OPENCL_ITER, int *MAXITER,int *MAXITER_G, int *MAXITER_B, float *RED_C, float *GRE_C, float *BLU_C, char filename[256], int *RAND){
+void readConf(int *RESX, int *RESY, int *NPOINTS, int *JITTER, float *JITTER_B, int *GRAY, int *OPENCL_ITER, int *MAXITER,int *MAXITER_G, int *MAXITER_B, float *RED_C, float *GRE_C, float *BLU_C, char filename[256], int *RAND, char kernelFilename[256]){
 	FILE* conf = NULL;
 
 	conf = fopen("./config.cfg", "r");
@@ -55,7 +55,7 @@ void readConf(int *RESX, int *RESY, int *NPOINTS, int *JITTER, float *JITTER_B, 
 	}
 
 	while ((read = getline(&line, &len, conf)) != -1) {
-			
+
 		switch(count){
 			case 1:
 				*RAND = atoi(line);
@@ -101,18 +101,29 @@ void readConf(int *RESX, int *RESY, int *NPOINTS, int *JITTER, float *JITTER_B, 
 				break;	
 			case 29:
 				strcpy(buff, line);
+				//Remove the tab that is on first pos
+				for (int i = 0; i < 255; i++){
+					filename[i] = buff[i+1];
+
+				}
+				strtok(filename, "\n");//Remove newline
+				break;
+			case 31:
+				strcpy(buff, line);
+				//Remove the tab that is on first pos
+				for (int i = 0; i < 255; i++){
+					kernelFilename[i] = buff[i+1];
+
+				}
+				strtok(filename, "\n");//Remove newline
+				break;
+
+
 
 		}
 		count++;
-	
-	}
 
-	//Remove the tab that is on first pos
-	for (int i = 0; i < 255; i++){
-		filename[i] = buff[i+1];
-		
 	}
-	strtok(filename, "\n");//Remove newline
 
 
 	fclose(conf);	

@@ -29,6 +29,7 @@ int main(){
 	float GREEN_COEFF = 1;
 	float BLUE_COEFF  = 1;
 	char filename[256] = "img.bmp";
+	char kernelFilename[256] = "";
 
 	int *pRESX        = &RESX;    
 	int *pRESY        = &RESY;
@@ -45,21 +46,21 @@ int main(){
 	float *pGRE_C     = &GREEN_COEFF;
 	float *pBLU_C     = &BLUE_COEFF;
 
-	readConf(pRESX, pRESY, pNPOINTS, pJITTER, pJITTER_B, pGRAY,pOPENCL_ITER, pMAXITER, pMAXITER_G, pMAXITER_B, pRED_C, pGRE_C, pBLU_C, filename, pRAND);
+	readConf(pRESX, pRESY, pNPOINTS, pJITTER, pJITTER_B, pGRAY,pOPENCL_ITER, pMAXITER, pMAXITER_G, pMAXITER_B, pRED_C, pGRE_C, pBLU_C, filename, pRAND, kernelFilename);
 
 	printf("[PARAMETERS]\n");
 	if(RANDOM_MODE == 1){
 		printf("\
-				RANDOM MODE: \x1B[32m  [ON]\x1B[0m\n");}
+			RANDOM MODE: \x1B[32m  [ON]\x1B[0m\n");}
 	else{
 		printf("\
-				RANDOM MODE: \x1B[31m  [OFF]\x1B[0m\n");}
+			RANDOM MODE: \x1B[31m  [OFF]\x1B[0m\n");}
 	if(GRAY == 1){
 		printf("\
-				GRAYSCALE MODE:\x1B[32m[ON]\x1B[0m\n");}
+			GRAYSCALE MODE:\x1B[32m[ON]\x1B[0m\n");}
 	else{
 		printf("\
-				GRAYSCALE MODE:\x1B[31m[OFF]\x1B[0m\n");}
+			GRAYSCALE MODE:\x1B[31m[OFF]\x1B[0m\n");}
 	printf("\
 			RESX:          %d\n\
 			RESY:          %d\n\
@@ -78,7 +79,8 @@ int main(){
 				\n", MAXITER_G, MAXITER_B, RED_COEFF, GREEN_COEFF, BLUE_COEFF);
 
 	}
-	printf("\tFILENAME:      %s\n", filename);
+	printf("\tIMAGE FILENAME :      %s\n", filename);
+	printf("\tKERNEL FILENAME:      %s\n", kernelFilename);
 
 	float c;
 	long long int maxiR = 0;
