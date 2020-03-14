@@ -57,7 +57,7 @@ void MandelIter(float zx, float zy, int **collisionsArray, int iternum, int RESX
 
 }
 
-void mandelIterOpenCL(float *initialPointsA,float *initialPointsB, int NPOINTS, int MAXITER, int RESX, int RESY, long long int **histogram){
+void mandelIterOpenCL(char kernelFilename[256], float *initialPointsA,float *initialPointsB, int NPOINTS, int MAXITER, int RESX, int RESY, long long int **histogram){
 	// Allocate memories 
 	//We can't pass a 2D array to a kernel, so we'll flatten a 2d array to 1D
 	float *trajectoriesA = (float*)malloc(sizeof(float)*NPOINTS*MAXITER);
@@ -80,12 +80,14 @@ void mandelIterOpenCL(float *initialPointsA,float *initialPointsB, int NPOINTS, 
 	char *kernelSource;
 	size_t kernelSize;
 
-	kernelFile = fopen("buddhaTrajKernel.cl", "r");
+	kernelFile = fopen(kernelFilename, "r");
 
 	if (!kernelFile) {
 
-		fprintf(stderr, "No file named buddhaTrajKernel.cl was found !\n");
-
+		fprintf(stderr, "No file named %s was found !\n", kernelFilename);
+		for (int i = 0; i < strlen(kernelFilename); i++){
+		printf("%d ", kernelFilename[i]);
+				}
 		exit(-1);
 
 	}

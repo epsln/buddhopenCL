@@ -157,7 +157,7 @@ int main(){
 				initialPointsA[i] = pointsArray[i][0] ;
 				initialPointsB[i] = pointsArray[i][1] ;
 			}
-			mandelIterOpenCL(initialPointsA, initialPointsB, NPOINTS, MAXITER, RESX, RESY, collisionsArrayR);
+			mandelIterOpenCL(kernelFilename, initialPointsA, initialPointsB, NPOINTS, MAXITER, RESX, RESY, collisionsArrayR);
 
 		}
 		else{
@@ -171,7 +171,7 @@ int main(){
 					initialPointsA[i] = a;
 					initialPointsB[i] = b;
 				}
-				mandelIterOpenCL(initialPointsA, initialPointsB, NPOINTS, MAXITER, RESX, RESY, collisionsArrayR);
+				mandelIterOpenCL(kernelFilename,initialPointsA, initialPointsB, NPOINTS, MAXITER, RESX, RESY, collisionsArrayR);
 			}
 		}
 	}
@@ -207,9 +207,9 @@ int main(){
 					initialPointsA[i] = pointsArray[i][0] ;
 					initialPointsB[i] = pointsArray[i][1] ;
 				}
-				mandelIterOpenCL(initialPointsA, initialPointsB, NPOINTS, MAXITER,   RESX, RESY, collisionsArrayR);
-				mandelIterOpenCL(initialPointsA, initialPointsB, NPOINTS, MAXITER_G, RESX, RESY, collisionsArrayG);
-				mandelIterOpenCL(initialPointsA, initialPointsB, NPOINTS, MAXITER_B, RESX, RESY, collisionsArrayB);
+				mandelIterOpenCL(kernelFilename,initialPointsA, initialPointsB, NPOINTS, MAXITER,   RESX, RESY, collisionsArrayR);
+				mandelIterOpenCL(kernelFilename,initialPointsA, initialPointsB, NPOINTS, MAXITER_G, RESX, RESY, collisionsArrayG);
+				mandelIterOpenCL(kernelFilename,initialPointsA, initialPointsB, NPOINTS, MAXITER_B, RESX, RESY, collisionsArrayB);
 
 			}
 			else{
@@ -220,9 +220,9 @@ int main(){
 						initialPointsA[i] = a;
 						initialPointsB[i] = b;
 					}
-					mandelIterOpenCL(initialPointsA, initialPointsB, NPOINTS, MAXITER,   RESX, RESY, collisionsArrayR);
-					mandelIterOpenCL(initialPointsA, initialPointsB, NPOINTS, MAXITER_G, RESX, RESY, collisionsArrayG);
-					mandelIterOpenCL(initialPointsA, initialPointsB, NPOINTS, MAXITER_B, RESX, RESY, collisionsArrayB);
+					mandelIterOpenCL(kernelFilename,initialPointsA, initialPointsB, NPOINTS, MAXITER,   RESX, RESY, collisionsArrayR);
+					mandelIterOpenCL(kernelFilename,initialPointsA, initialPointsB, NPOINTS, MAXITER_G, RESX, RESY, collisionsArrayG);
+					mandelIterOpenCL(kernelFilename,initialPointsA, initialPointsB, NPOINTS, MAXITER_B, RESX, RESY, collisionsArrayB);
 					int stopMark = -1;
 					if(i % 100 == 0)	
 						stopMark = progressBar(i, OPENCL_ITER, stopMark);

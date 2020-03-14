@@ -115,7 +115,7 @@ void readConf(int *RESX, int *RESY, int *NPOINTS, int *JITTER, float *JITTER_B, 
 					kernelFilename[i] = buff[i+1];
 
 				}
-				strtok(filename, "\n");//Remove newline
+				strtok(kernelFilename, "\n");//Remove newline
 				break;
 
 
