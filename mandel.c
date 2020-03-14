@@ -85,9 +85,6 @@ void mandelIterOpenCL(char kernelFilename[256], float *initialPointsA,float *ini
 	if (!kernelFile) {
 
 		fprintf(stderr, "No file named %s was found !\n", kernelFilename);
-		for (int i = 0; i < strlen(kernelFilename); i++){
-		printf("%d ", kernelFilename[i]);
-				}
 		exit(-1);
 
 	}

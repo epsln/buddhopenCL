@@ -9,47 +9,20 @@ __kernel void buddhaTraj(__global const float *initPointsA,
 			 __global float *randomPointsB){
 
 int gid = get_global_id(0);
-float2 r = (float2)(initPointsA[gid], initPointsB[gid]);
-float2 z = (float2)(randomPointsA[gid], randomPointsB[gid]);
-//float2 z = (float2)(0.1, 0.2);
+float2 z0 = (float2)(randomPointsA[gid], randomPointsB[gid]);
 
 float xtemp = 0;
-float x = z.x;
-float y = z.y;
+float x = 0;
+float y = 0;
 
 int escaped = 0;
 int compt = 0;
 
-// x_n+1 = r*x_n*(1-x)
-// (r*x).a = r.a*x.a - r.b*x.b
-// (r*x).b = r.y*x.a + r.x*x.b
-// z_n+1.a = 
-
-
-
-
 for (int i = 0; i < MAXITER; i++){
 	compt++;
-	/*Buddhabrot equation :|
-	xtemp = x*x - y*y + r.x;
-	y = 2*x*y + r.y;
+	xtemp = x*x - y*y + z0.x;
+	y = 2*x*y + z0.y;
 	x = xtemp;
-	*/
-
-	//BuddhaLog equation :)
-	
-	/*
-	rxa = r.x*x - r.y * y;
-	rxb = r.y*y + r.x * y;
-	xtemp = rxa*(1-x) - rxb*y;
-	y = rxb*(1-x) + rxa*y;
-	x = xtemp;
-i (a d - b c^2 + b c - b d^2) - a c^2 + a c - a d^2 - b d
-	*/
-	xtemp = r.x * x*x + r.x * x - r.x * y*y - r.y * y;
-	y = r.x * y - r.y * x * x + r.y * x - r.y*y*y;
-	x = xtemp;
-
 	
 	trajsA[MAXITER*gid + i] =x;
 	trajsB[MAXITER*gid + i] =y;
