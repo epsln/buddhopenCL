@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 #include <CL/cl.h>
 
 #define MAX_SOURCE_SIZE (0x100000)
@@ -85,9 +86,6 @@ void mandelIterOpenCL(char kernelFilename[256], float *initialPointsA,float *ini
 	if (!kernelFile) {
 
 		fprintf(stderr, "No file named %s was found !\n", kernelFilename);
-		for (int i = 0; i < strlen(kernelFilename); i++){
-		printf("%d ", kernelFilename[i]);
-				}
 		exit(-1);
 
 	}
@@ -162,7 +160,7 @@ void mandelIterOpenCL(char kernelFilename[256], float *initialPointsA,float *ini
 	// Execute the kernel
 
 	size_t globalItemSize = NPOINTS;
-	size_t localItemSize = 32; // globalItemSize has to be a multiple of localItemSize. 1024/64 = 16 
+	size_t localItemSize = 2; // globalItemSize has to be a multiple of localItemSize. 1024/64 = 16 
 	ret = clEnqueueNDRangeKernel(commandQueue, kernel, 1, NULL, &globalItemSize, &localItemSize, 0, NULL, NULL);	
 
 	// Read from device back to host.
@@ -178,7 +176,7 @@ void mandelIterOpenCL(char kernelFilename[256], float *initialPointsA,float *ini
 
 		if (i == MAXITER*NPOINTS - 1){
 			printf("Trajectories are empty !!!!\n");
-			return;
+			exit(-3);
 		}
 
 	}
