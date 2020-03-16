@@ -7,57 +7,6 @@
 
 #define MAX_SOURCE_SIZE (0x100000)
 
-void MandelIter(float zx, float zy, int **collisionsArray, int iternum, int RESX, int RESY){
-	float x = 0;
-	float y = 0;
-	float oldX = 0;
-	float oldY = 0;
-	int stepLimit  = 0;
-	int stepsTaken = 0;
-	float xtemp = 0;
-	int xCoord, yCoord;
-
-	float coordIterX[iternum];
-	float coordIterY[iternum];
-
-
-	for(int i = 0; i < iternum; i++){
-		xtemp = pow(x, 2) - pow(y, 2) + zx;
-		y = 2*x*y + zy;
-		x = xtemp;
-		coordIterX[i] = x;
-		coordIterY[i] = y; 
-		if (x*x+y*y > 4 ){
-			for(int j = 0; j < i-1; j++){
-				xCoord = (int)map(coordIterX[j], -2, 2, 0, (double)RESX);
-				yCoord = (int)map(coordIterY[j], -2, 2, 0, (double)RESY);
-				if(xCoord > 0 && xCoord < RESX && yCoord > 0 && yCoord < RESY){ 
-					collisionsArray[xCoord][yCoord] += 1;
-				}
-			}
-			break;
-		}
-		if (x == oldX && y == oldY){
-			for(int j = 0; j < i-1; j++){
-				xCoord = (int)map(coordIterX[j], -2, 2, 0, (double)RESX);
-				yCoord = (int)map(coordIterY[j], -2, 2, 0, (double)RESY);
-				if(xCoord > 0 && xCoord < RESX && yCoord > 0 && yCoord < RESY){ 
-					collisionsArray[xCoord][yCoord] += 1;
-				}
-			}
-			break;
-		}
-		if (stepsTaken == stepLimit){
-			oldX = x;
-			oldY = y;
-			stepsTaken  = 0;
-			stepLimit  *= 2;
-		}
-		stepsTaken++;
-	}
-
-}
-
 void mandelIterOpenCL(char kernelFilename[256], float *initialPointsA,float *initialPointsB, int NPOINTS, int MAXITER, int RESX, int RESY, long long int **histogram){
 	// Allocate memories 
 	//We can't pass a 2D array to a kernel, so we'll flatten a 2d array to 1D
@@ -160,7 +109,7 @@ void mandelIterOpenCL(char kernelFilename[256], float *initialPointsA,float *ini
 	// Execute the kernel
 
 	size_t globalItemSize = NPOINTS;
-	size_t localItemSize = 2; // globalItemSize has to be a multiple of localItemSize. 1024/64 = 16 
+	size_t localItemSize = 1024; // globalItemSize has to be a multiple of localItemSize. 
 	ret = clEnqueueNDRangeKernel(commandQueue, kernel, 1, NULL, &globalItemSize, &localItemSize, 0, NULL, NULL);	
 
 	// Read from device back to host.
