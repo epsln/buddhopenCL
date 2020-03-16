@@ -12,11 +12,6 @@ float2 r = (float2)(initPointsA[gid], initPointsB[gid]);
 float2 z = (float2)(randomPointsA[gid], randomPointsB[gid]);
 
 float xtemp = 0;
-float oldX = 0;
-float oldY = 0;
-int stepsTaken = 0;
-int stepLimit = 2;
-
 int escaped = 0;
 int compt = 0;
 
@@ -40,41 +35,21 @@ for (int i = 0; i < MAXITER; i++){
 	trajsA[MAXITER*gid + i] =z.x;
 	trajsB[MAXITER*gid + i] =z.y;
 	
-	if (z.x*z.x+z.y*z.y > 4){
+	if (z.x*z.x+z.y*z.y > 4 ){
 	escaped = 1;
-        	
+	
 	for(int j = i+1; j < MAXITER; j++){
 		trajsA[MAXITER * gid + j] = -100;
 		trajsB[MAXITER * gid + j] = -100;
 	}
+	
 		break;
 	}
-
-		
-	if (oldX == z.x && oldY == z.y){
-
+	if (escaped == 0 && compt == MAXITER){
 	for(int j = 0; j < MAXITER; j++){
-		trajsA[MAXITER * gid + j] = -100;
-		trajsB[MAXITER * gid + j] = -100;
-		
+		trajsA[MAXITER * gid + j] = -10;
+		trajsB[MAXITER * gid + j] = -10;
 	}
-	break;
-	}	
-	if (stepsTaken == stepLimit){
-		oldX = z.x;
-		oldY = z.y;
-		stepsTaken = 0;
-		stepLimit *= 2;
 	}
-	stepsTaken++;
-	
-
 }
-if ((escaped == 0 && compt == MAXITER)){
-	for(int j = 0; j < MAXITER; j++){
-		trajsA[MAXITER * gid + j] = -100;
-		trajsB[MAXITER * gid + j] = -100;
-		
-	}
-	}
 }
