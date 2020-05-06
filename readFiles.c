@@ -5,7 +5,7 @@
 #include <math.h>
 
 
-void readPoints(float *pointsList[2]){
+void readPoints(double *pointsList[2]){
 	FILE* pointsX = NULL;
 	FILE* pointsY = NULL;
 
@@ -38,7 +38,7 @@ void readPoints(float *pointsList[2]){
 	fclose(pointsY);
 }
 
-void readConf(int *RESX, int *RESY, int *NPOINTS, int *JITTER, float *JITTER_B, int *GRAY, int *OPENCL_ITER, int *MAXITER,int *MAXITER_G, int *MAXITER_B, float *RED_C, float *GRE_C, float *BLU_C, char filename[256], int *RAND, char kernelFilename[256]){
+void readConf(int *RESX, int *RESY, int *NPOINTS, int *JITTER, double *JITTER_B, int *GRAY, int *OPENCL_ITER, int *MAXITER,int *MAXITER_G, int *MAXITER_B, double *RED_C, double *GRE_C, double *BLU_C, char filename[256], int *RAND, char kernelFilename[256]){
 	FILE* conf = NULL;
 
 	conf = fopen("./config.cfg", "r");
