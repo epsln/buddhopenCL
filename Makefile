@@ -1,8 +1,8 @@
 EXEC := ./buddha
 
-CFLAGS := -g -Og -Ofast -Wall -lm -l OpenCL 
+CFLAGS := -g -Og -Ofast -Wall -lm -l OpenCL -I src/include
 
-OBJS := $(patsubst %.c,%.o,$(wildcard *.c))
+OBJS := $(patsubst src/%.c,src/%.o,$(wildcard src/*.c))
 
 build: $(OBJS)
 		gcc $(OBJS) -o $(EXEC) $(CFLAGS)
@@ -17,6 +17,6 @@ build: $(OBJS)
 
 # remove compilation products
 clean:
-	rm -f $(EXEC) *.o *.dep
+	rm -f $(EXEC) src/*.o src/*.dep
 run: build
 	$(EXEC)
