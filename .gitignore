@@ -2,3 +2,5 @@
 *.dep
 *.bmp
 bin/*
+*.swp
+*.swo
