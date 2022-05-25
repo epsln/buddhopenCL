@@ -111,8 +111,10 @@ void readConf(int *RESX, int *RESY, int *NPOINTS, int *JITTER, double *JITTER_B,
 			case 31:
 				strcpy(buff, line);
 				//Remove the tab that is on first pos
-				for (int i = 0; i < 255; i++){
-					kernelFilename[i] = buff[i+1];
+				//prefix "kernels/"
+				strcpy(kernelFilename, "kernels/");
+				for (int i = 8; i < 255; i++){
+					kernelFilename[i] = buff[i-7];
 
 				}
 				strtok(kernelFilename, "\n");//Remove newline
